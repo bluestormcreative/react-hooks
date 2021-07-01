@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react'
 function useLocalStorageState(defaultName = '') {
   const loadName = () => window.localStorage.getItem('name') || defaultName;
   const [name, setName] = useState(loadName);
-  setName(window.localStorage.setItem('name', defaultName));
+  setName(window.localStorage.setItem('name', name));
 
   useEffect(() => {
     window.localStorage.setItem('name', name);
