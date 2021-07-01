@@ -5,14 +5,14 @@ import React, { useState, useEffect } from 'react'
 
 function useLocalStorageState(defaultName = '') {
   const loadName = () => window.localStorage.getItem('name') || defaultName;
-  const [name, setName] = useState(loadName);
-  setName(window.localStorage.setItem('name', name));
+  const [initialName, setInitialName] = useState(loadName);
+  setInitialName(window.localStorage.setItem('name', initialName));
 
   useEffect(() => {
-    window.localStorage.setItem('name', name);
-  }, [name]);
+    window.localStorage.setItem('name', initialName);
+  }, [initialName]);
 
-  return [name, setName];
+  return [initialName, setInitialName];
 }
 
 function Greeting({initialName = ''}) {
