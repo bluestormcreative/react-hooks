@@ -4,7 +4,7 @@
 import React, { useState } from 'react'
 
 function Greeting() {
-  const [name, setName] = useState();
+  const [name, setName] = useState('Bronwen');
 
   function handleChange(event) {
     // 🐨 update the name here based on event.target.value
@@ -15,7 +15,7 @@ function Greeting() {
     <div>
       <form>
         <label htmlFor="name">Name: </label>
-        <input onChange={handleChange} id="name" />
+        <input onChange={handleChange} id="name" value={name} />
       </form>
       {name ? <strong>Hello {name}</strong> : 'Please type your name'}
     </div>
