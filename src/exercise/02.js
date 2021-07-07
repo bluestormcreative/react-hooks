@@ -14,7 +14,7 @@ function useLocalStorageState(key, defaultValue = '') {
   return [initialValue, setInitialValue];
 }
 
-function Greeting({initialName = ''}) {
+function Greeting({ initialName = '' }) {
   const [name, setName] = useLocalStorageState('name', initialName);
 
   function handleChange(event) {
