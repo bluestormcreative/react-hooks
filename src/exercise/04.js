@@ -1,16 +1,21 @@
 // useState: tic tac toe
 // http://localhost:3000/isolated/exercise/04.js
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 function Board() {
-  // 🐨 squares is the state for this component. Add useState for squares
-  const [squares, setSquares] = useState(Array(9).fill(null));
+  // Either get squares data from localStorage or start empty.
+  const [squares, setSquares] = useState(() =>
+  JSON.parse(window.localStorage.getItem('squares')) || Array(9).fill(null),);
 
   // Derived state variables (derived from other state)
   const nextValue = calculateNextValue(squares);
   const winner = calculateWinner(squares);
   const status = calculateStatus(winner, squares, nextValue);
+
+  useEffect(() => {
+    window.localStorage.setItem('squares', JSON.stringify(squares));
+  }, [squares]);
 
   // This is the function your square click handler will call. `square` should
   // be an index. So if they click the center square, this will be `4`.
