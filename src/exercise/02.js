@@ -3,23 +3,24 @@
 
 import React, { useState, useEffect } from 'react'
 
-function useLocalStorageState(defaultName = '') {
-  const loadName = () => window.localStorage.getItem('name') || defaultName;
-  const [initialName, setInitialName] = useState(loadName);
+function useLocalStorageState(key, defaultValue = '') {
+  const loadValue = () => window.localStorage.getItem(key) || defaultValue;
+  const [initialValue, setInitialValue] = useState(loadValue);
 
   useEffect(() => {
-    window.localStorage.setItem('name', initialName);
-  }, [initialName]);
+    window.localStorage.setItem(key, initialValue);
+  }, [key, initialValue]);
 
-  return [initialName, setInitialName];
+  return [initialValue, setInitialValue];
 }
 
 function Greeting({initialName = ''}) {
-  const [name, setName] = useLocalStorageState(initialName);
+  const [name, setName] = useLocalStorageState('name', initialName);
 
   function handleChange(event) {
     setName(event.target.value)
   }
+
   return (
     <div>
       <form>
