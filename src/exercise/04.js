@@ -44,6 +44,8 @@ function Info({ status }) {
 
 function Game() {
   const [squares, setSquares] = useLocalStorageState('squares', Array(9).fill(null));
+  const [history, setHistory] = useLocalStorageState('history', [Array(9).fill(null)]); // Set this to an empty array with nine slots.
+  const [currentStep, setCurrentStep] = useLocalStorageState('currentStep', 0);
   const nextValue = calculateNextValue(squares);
   const winner = calculateWinner(squares);
   const status = calculateStatus(winner, squares, nextValue);
@@ -55,11 +57,18 @@ function Game() {
 
     const currentSquares = [...squares];
     currentSquares[square] = nextValue;
+
+    const moves = [...history];
+    const thisMove = moves[square] = currentSquares;
+    const newHistory = [...history, thisMove];
+
     setSquares(currentSquares);
+    setHistory(newHistory);
   }
 
   function restart() {
     setSquares(Array(9).fill(null));
+    setHistory([Array(9).fill(null)]);
   }
 
   return (
@@ -76,6 +85,7 @@ function Game() {
       <div className="game-info">
         <Info
           status={status}
+          moves
         />
       </div>
     </div>
