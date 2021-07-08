@@ -36,6 +36,9 @@ function Board({ squares, selectSquare }) {
 
 function Info({ status, moves, currentStep, setCurrentStep }) {
   function goToMove(step) {
+    // Note to self:
+    // When currentStep changes, all the derived states for squares/winner/etc will
+    // also change accordingly, which is why the history buttons change the board.
     setCurrentStep(step);
   }
   return (
