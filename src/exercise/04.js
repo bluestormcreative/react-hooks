@@ -35,20 +35,25 @@ function Board({ squares, selectSquare }) {
 }
 
 function Info({ status, moves, currentStep }) {
-  let buttonText = '';
-  if (moves.length === 1) {
-    buttonText = `Go to game start`;
-  } else {
-    buttonText = `Go to move #${moves.length - 1}`;
-  }
-
   return (
     <div>
       <div className="status">{status}</div>
       <ol>
-        {moves.map((move, i) => (
-          <li><button onClick={move}>{buttonText}</button></li>
-        ))}
+        {moves.map((move, step) => {
+          let buttonText = (step !== 0) ? `Go to #${step}` : `Go to start`;
+          let isCurrentStep = currentStep === step;
+          return (
+            <li key={move}>
+              <button
+                disabled={isCurrentStep}
+                onClick
+              >
+                {buttonText} {isCurrentStep ? `(current)` : null}
+              </button>
+            </li>
+          );
+        }
+        )}
       </ol>
     </div>
   );
