@@ -43,7 +43,7 @@ function Info({ status, moves, currentStep, setCurrentStep }) {
       <div className="status">{status}</div>
       <ol>
         {moves.map((move, step) => {
-          let buttonText = (step !== 0) ? `Go to move #${step}` : `Go to start`;
+          let buttonText = step ? `Go to move #${step}` : `Go to start`;
           let isCurrentStep = currentStep === step;
           return (
             <li key={move}>
