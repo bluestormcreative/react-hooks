@@ -30,9 +30,6 @@ function Board({ squares, selectSquare, restart }) {
         {renderSquare(7)}
         {renderSquare(8)}
       </div>
-      <button className="restart" onClick={restart}>
-        restart
-      </button>
     </div>
   )
 }
@@ -71,8 +68,10 @@ function Game() {
         <Board
           squares={squares}
           selectSquare={selectSquare}
-          restart={restart}
         />
+        <button className="restart" onClick={restart}>
+          restart
+        </button>
       </div>
       <div className="game-info">
         <Info
