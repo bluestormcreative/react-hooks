@@ -34,14 +34,21 @@ function Board({ squares, selectSquare }) {
   )
 }
 
-function Info({ status, moves }) {
+function Info({ status, moves, currentStep }) {
+  let buttonText = '';
+  if (moves.length === 1) {
+    buttonText = `Go to game start`;
+  } else {
+    buttonText = `Go to move #${moves.length - 1}`;
+  }
+
   return (
     <div>
       <div className="status">{status}</div>
       <ol>
-      {moves.map((move, i) => (
-        <li><button onClick={move}>{`Go to move #${i}`}</button></li>
-      ))}
+        {moves.map((move, i) => (
+          <li><button onClick={move}>{buttonText}</button></li>
+        ))}
       </ol>
     </div>
   );
@@ -95,6 +102,7 @@ function Game() {
         <Info
           status={status}
           moves={history}
+          currentStep={currentStep}
         />
       </div>
     </div>
