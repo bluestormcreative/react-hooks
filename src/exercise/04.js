@@ -37,8 +37,12 @@ function Board({ squares, selectSquare, restart }) {
   )
 }
 
-function Info({ nextValue, status, winner }) {
-
+function Info({ status }) {
+  return (
+    <div>
+      <div className="status">{status}</div>
+    </div>
+  );
 }
 
 function Game() {
@@ -72,9 +76,7 @@ function Game() {
       </div>
       <div className="game-info">
         <Info
-          nextValue={nextValue}
           status={status}
-          winner={winner}
         />
       </div>
     </div>
