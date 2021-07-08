@@ -4,39 +4,18 @@
 import React from 'react'
 import { useLocalStorageState } from '../utils';
 
-function Board() {
-  // Either get squares data from localStorage or start empty.
-  // Use custom hook and pass key, defaultValue.
-  // This replaces both useState and useEffect hooks.
-  const [squares, setSquares] = useLocalStorageState('squares', Array(9).fill(null));
-
-  // Derived state variables (derived from other state)
-  const nextValue = calculateNextValue(squares);
-  const winner = calculateWinner(squares);
-  const status = calculateStatus(winner, squares, nextValue);
-
-  // This is the function your square click handler will call. `square` should
-  // be an index. So if they click the center square, this will be `4`.
+function Board({ squares, setSquares, winner, nextValue }) {
   function selectSquare(square) {
-    // Note to self:
-    // This was hard for me to grok - we are checking if the squares state var
-    // has a value at the index of 'square' (the index of the clicked square);
     if (winner || squares[square] ) {
       return;
     }
 
-    // Don't mutate state directly, make a copy.
     const currentSquares = [...squares];
-
-    // Use the array index to set the next value on our clicked square.
     currentSquares[square] = nextValue;
-
-    // Update the whole piece of state as usual.
     setSquares(currentSquares);
   }
 
   function restart() {
-    // 🐨 reset the squares
     setSquares(Array(9).fill(null));
   }
 
@@ -50,8 +29,6 @@ function Board() {
 
   return (
     <div>
-      {/* 🐨 put the status in the div below */}
-      <div className="status">{status}</div>
       <div className="board-row">
         {renderSquare(0)}
         {renderSquare(1)}
@@ -74,11 +51,32 @@ function Board() {
   )
 }
 
+function Info({ nextValue, status, winner }) {
+
+}
+
 function Game() {
+  const [squares, setSquares] = useLocalStorageState('squares', Array(9).fill(null));
+  const nextValue = calculateNextValue(squares);
+  const winner = calculateWinner(squares);
+  const status = calculateStatus(winner, squares, nextValue);
+
   return (
     <div className="game">
       <div className="game-board">
-        <Board />
+        <Board
+          squares={squares}
+          setSquares={setSquares}
+          winner={winner}
+          nextValue={nextValue}
+        />
+      </div>
+      <div className="game-info">
+        <Info
+          nextValue={nextValue}
+          status={status}
+          winner={winner}
+        />
       </div>
     </div>
   )
