@@ -34,19 +34,22 @@ function Board({ squares, selectSquare }) {
   )
 }
 
-function Info({ status, moves, currentStep }) {
+function Info({ status, moves, currentStep, setCurrentStep }) {
+  function goToMove(step) {
+    setCurrentStep(step);
+  }
   return (
     <div>
       <div className="status">{status}</div>
       <ol>
         {moves.map((move, step) => {
-          let buttonText = (step !== 0) ? `Go to #${step}` : `Go to start`;
+          let buttonText = (step !== 0) ? `Go to move #${step}` : `Go to start`;
           let isCurrentStep = currentStep === step;
           return (
             <li key={move}>
               <button
                 disabled={isCurrentStep}
-                onClick
+                onClick={() => goToMove(step)}
               >
                 {buttonText} {isCurrentStep ? `(current)` : null}
               </button>
@@ -108,6 +111,7 @@ function Game() {
           status={status}
           moves={history}
           currentStep={currentStep}
+          setCurrentStep={setCurrentStep}
         />
       </div>
     </div>
