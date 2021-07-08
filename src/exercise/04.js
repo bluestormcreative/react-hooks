@@ -34,18 +34,24 @@ function Board({ squares, selectSquare, restart }) {
   )
 }
 
-function Info({ status }) {
+function Info({ status, moves }) {
   return (
     <div>
       <div className="status">{status}</div>
+      <ol>
+      {moves.map((move, i) => (
+        <li><button onClick={move}>{`Go to move #${i}`}</button></li>
+      ))}
+      </ol>
     </div>
   );
 }
 
 function Game() {
-  const [squares, setSquares] = useLocalStorageState('squares', Array(9).fill(null));
   const [history, setHistory] = useLocalStorageState('history', [Array(9).fill(null)]); // Set this to an empty array with nine slots.
   const [currentStep, setCurrentStep] = useLocalStorageState('currentStep', 0);
+
+  const squares = history[currentStep]; // Use history state instead of original squares state.
   const nextValue = calculateNextValue(squares);
   const winner = calculateWinner(squares);
   const status = calculateStatus(winner, squares, nextValue);
@@ -65,14 +71,13 @@ function Game() {
     let prevStep = currentStep;
     prevStep++;
 
-    setSquares(currentSquares);
     setHistory(newHistory);
     setCurrentStep(prevStep);
   }
 
   function restart() {
-    setSquares(Array(9).fill(null));
     setHistory([Array(9).fill(null)]);
+    setCurrentStep(0);
   }
 
   return (
@@ -89,7 +94,7 @@ function Game() {
       <div className="game-info">
         <Info
           status={status}
-          moves
+          moves={history}
         />
       </div>
     </div>
