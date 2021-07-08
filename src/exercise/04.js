@@ -4,21 +4,7 @@
 import React from 'react'
 import { useLocalStorageState } from '../utils';
 
-function Board({ squares, setSquares, winner, nextValue }) {
-  function selectSquare(square) {
-    if (winner || squares[square] ) {
-      return;
-    }
-
-    const currentSquares = [...squares];
-    currentSquares[square] = nextValue;
-    setSquares(currentSquares);
-  }
-
-  function restart() {
-    setSquares(Array(9).fill(null));
-  }
-
+function Board({ squares, selectSquare, restart }) {
   function renderSquare(i) {
     return (
       <button className="square" onClick={() => selectSquare(i)}>
@@ -61,14 +47,27 @@ function Game() {
   const winner = calculateWinner(squares);
   const status = calculateStatus(winner, squares, nextValue);
 
+  function selectSquare(square) {
+    if (winner || squares[square] ) {
+      return;
+    }
+
+    const currentSquares = [...squares];
+    currentSquares[square] = nextValue;
+    setSquares(currentSquares);
+  }
+
+  function restart() {
+    setSquares(Array(9).fill(null));
+  }
+
   return (
     <div className="game">
       <div className="game-board">
         <Board
           squares={squares}
-          setSquares={setSquares}
-          winner={winner}
-          nextValue={nextValue}
+          selectSquare={selectSquare}
+          restart={restart}
         />
       </div>
       <div className="game-info">
