@@ -4,7 +4,7 @@
 import React from 'react'
 import { useLocalStorageState } from '../utils';
 
-function Board({ squares, selectSquare, restart }) {
+function Board({ squares, selectSquare }) {
   function renderSquare(i) {
     return (
       <button className="square" onClick={() => selectSquare(i)}>
