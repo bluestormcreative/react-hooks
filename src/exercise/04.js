@@ -62,8 +62,12 @@ function Game() {
     const thisMove = moves[square] = currentSquares;
     const newHistory = [...history, thisMove];
 
+    let prevStep = currentStep;
+    prevStep++;
+
     setSquares(currentSquares);
     setHistory(newHistory);
+    setCurrentStep(prevStep);
   }
 
   function restart() {
