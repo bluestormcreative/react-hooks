@@ -18,15 +18,12 @@ function Tilt({children}) {
       glare: true,
       'max-glare': 0.5,
     })
-  });
 
-  // 💰 Don't forget to return a cleanup function. VanillaTilt.init will add an
-  // object to your DOM node to cleanup:
-  // `return () => tiltNode.vanillaTilt.destroy()`
-  //
-  // 💰 Don't forget to specify your effect's dependencies array! In our case
-  // we know that the tilt node will never change, so make it `[]`. Ask me about
-  // this for a more in depth explanation.
+    // Return a function to clean up the event listeners when the component unmounts.
+    // From the docs: "every effect may return a function that cleans up after it"
+    // https://reactjs.org/docs/hooks-effect.html#example-using-hooks-1
+    return () => tiltNode.vanillaTilt.destroy();
+  }, []);
 
   // 🐨 add the `ref` prop to the `tilt-root` div here (this is the jam)
   return (
