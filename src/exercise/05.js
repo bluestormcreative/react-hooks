@@ -28,7 +28,7 @@ function Tilt({children}) {
   // we know that the tilt node will never change, so make it `[]`. Ask me about
   // this for a more in depth explanation.
 
-  // 🐨 add the `ref` prop to the `tilt-root` div here:
+  // 🐨 add the `ref` prop to the `tilt-root` div here (this is the jam)
   return (
     <div className="tilt-root" ref={tiltRef}>
       <div className="tilt-child">{children}</div>
