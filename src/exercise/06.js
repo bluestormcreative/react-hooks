@@ -53,12 +53,12 @@ function PokemonInfo({pokemonName}) {
     });
   }, [pokemonName]);
 
-  if (! pokemonName) {
-    return 'Submit a pokemon!';
-  }
-
   if (error !== null) {
     return <PokeError error={error} />
+  }
+
+  if (! pokemonName) {
+    return 'Submit a pokemon!';
   }
 
   if (pokemonName && pokemon === null) {
