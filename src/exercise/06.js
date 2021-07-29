@@ -22,6 +22,7 @@ const PokeError = ({ error }) => (
 function PokemonInfo({pokemonName}) {
   // 🐨 Have state for the pokemon (null)
   const [pokemon, setPokemon] = useState(null);
+  const [error, setError] = useState(null);
   // 🐨 use React.useEffect where the callback should be called whenever the
   // pokemon name changes.
   // 💰 DON'T FORGET THE DEPENDENCIES ARRAY!
@@ -48,13 +49,16 @@ function PokemonInfo({pokemonName}) {
         setPokemon(pokemonData);
       }
     ).catch(err => {
-      console.log('ERROR: ', err.message);
-      return <PokeError error={err} />;
+      setError(err);
     });
   }, [pokemonName]);
 
   if (! pokemonName) {
     return 'Submit a pokemon!';
+  }
+
+  if (error !== null) {
+    return <PokeError error={error} />
   }
 
   if (pokemonName && pokemon === null) {
