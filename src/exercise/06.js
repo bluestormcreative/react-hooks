@@ -23,7 +23,6 @@ function PokemonInfo({pokemonName}) {
   const [status, setStatus] = useState('idle');
 
   useEffect(() => {
-    setStatus('idle')
     if (!pokemonName) {
       return;
     }
@@ -41,22 +40,6 @@ function PokemonInfo({pokemonName}) {
       setStatus('rejected');
     });
   }, [pokemonName]);
-
-  // if (error !== null) {
-  //   return <PokeError error={error} />
-  // }
-
-  // if (! pokemonName) {
-  //   return 'Submit a pokemon!';
-  // }
-
-  // if (pokemonName && pokemon === null) {
-  //   return <PokemonInfoFallback name={pokemonName} />
-  // }
-
-  // if (pokemon !== null) {
-  //   return <PokemonDataView pokemon={pokemon} />
-  // }
 
   switch(status) {
     case 'idle' :
