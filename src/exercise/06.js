@@ -17,27 +17,27 @@ const PokeError = ({ error }) => (
 );
 
 function PokemonInfo({pokemonName}) {
-  // 🐨 Have state for the pokemon (null)
-  const [pokemon, setPokemon] = useState(null);
-  const [error, setError] = useState(null);
-  const [status, setStatus] = useState('idle');
+  const [pokeState, setPokeState] = useState({
+    pokemon: null,
+    error: null,
+    status: 'idle',
+  });
+
+  const { pokemon, error, status } = pokeState;
 
   useEffect(() => {
     if (!pokemonName) {
       return;
     }
-    setPokemon(null);
 
-    setStatus('pending');
+    setPokeState({status: 'pending' });
     fetchPokemon(pokemonName)
     .then(
       pokemonData => {
-        setPokemon(pokemonData);
-        setStatus('resolved');
+        setPokeState({status: 'resolved', pokemon: pokemonData});
       }
     ).catch(err => {
-      setError(err);
-      setStatus('rejected');
+      setPokeState({error: err, status: 'rejected'});
     });
   }, [pokemonName]);
 
