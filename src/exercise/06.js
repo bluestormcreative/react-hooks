@@ -13,6 +13,12 @@ import {
   fetchPokemon
 } from '../pokemon'
 
+const PokeError = ({ error }) => (
+  <div role="alert">
+    There was an error: <pre style={{whiteSpace: 'normal'}}>{error.message}</pre>
+  </div>
+);
+
 function PokemonInfo({pokemonName}) {
   // 🐨 Have state for the pokemon (null)
   const [pokemon, setPokemon] = useState(null);
@@ -41,8 +47,10 @@ function PokemonInfo({pokemonName}) {
       pokemonData => {
         setPokemon(pokemonData);
       }
-    );
-
+    ).catch(err => {
+      console.log('ERROR: ', err.message);
+      return <PokeError error={err} />;
+    });
   }, [pokemonName]);
 
   if (! pokemonName) {
