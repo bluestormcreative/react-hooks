@@ -43,7 +43,7 @@ function PokemonInfo({pokemonName}) {
       }
     );
 
-  }, [pokemonName, pokemon]);
+  }, [pokemonName]);
 
   if (! pokemonName) {
     return 'Submit a pokemon!';
