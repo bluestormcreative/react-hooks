@@ -1,7 +1,8 @@
 // useEffect: HTTP requests
 // http://localhost:3000/isolated/exercise/06.js
 
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import {
   PokemonForm,
@@ -15,26 +16,6 @@ const PokeError = ({ error }) => (
     There was an error: <pre style={{whiteSpace: 'normal'}}>{error.message}</pre>
   </div>
 );
-class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false, error: null };
-  }
-
-  static getDerivedStateFromError(error) {
-    // Update state so the next render will show the fallback UI.
-    return { hasError: true, error: error };
-  }
-
-  render() {
-    if (this.state.hasError) {
-      // You can render any custom fallback UI\
-      return <PokeError error={this.state.error} />;
-    }
-
-    return this.props.children;
-  }
-}
 
 function PokemonInfo({pokemonName}) {
   const [pokeState, setPokeState] = useState({
@@ -91,7 +72,7 @@ function App() {
       <PokemonForm pokemonName={pokemonName} onSubmit={handleSubmit} />
       <hr />
       <div className="pokemon-info">
-        <ErrorBoundary key={pokemonName}>
+        <ErrorBoundary key={pokemonName} FallbackComponent={PokeError}>
           <PokemonInfo pokemonName={pokemonName} />
         </ErrorBoundary>
       </div>
