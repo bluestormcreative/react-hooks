@@ -15,6 +15,26 @@ const PokeError = ({ error }) => (
     There was an error: <pre style={{whiteSpace: 'normal'}}>{error.message}</pre>
   </div>
 );
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true, error: error };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // You can render any custom fallback UI\
+      return <PokeError error={this.state.error} />;
+    }
+
+    return this.props.children;
+  }
+}
 
 function PokemonInfo({pokemonName}) {
   const [pokeState, setPokeState] = useState({
@@ -46,7 +66,7 @@ function PokemonInfo({pokemonName}) {
       return 'Submit a pokemon!';
 
     case 'rejected' :
-      return <PokeError error={error} />;
+      throw error;
 
     case 'pending' :
       return <PokemonInfoFallback name={pokemonName} />;
@@ -71,7 +91,9 @@ function App() {
       <PokemonForm pokemonName={pokemonName} onSubmit={handleSubmit} />
       <hr />
       <div className="pokemon-info">
-        <PokemonInfo pokemonName={pokemonName} />
+        <ErrorBoundary>
+          <PokemonInfo pokemonName={pokemonName} />
+        </ErrorBoundary>
       </div>
     </div>
   )
