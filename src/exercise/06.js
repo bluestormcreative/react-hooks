@@ -11,10 +11,9 @@ import {
   fetchPokemon
 } from '../pokemon'
 
-const PokeError = ({ error, resetErrorBoundary }) => (
+const PokeError = ({ error }) => (
   <div role="alert">
     There was an error: <pre style={{whiteSpace: 'normal'}}>{error.message}</pre>
-    <button onClick={resetErrorBoundary}>Try again</button>
   </div>
 );
 
@@ -68,16 +67,16 @@ function App() {
     setPokemonName(newPokemonName)
   }
 
-  function handleErrorReset() {
-    setPokemonName('')
-  }
-
   return (
     <div className="pokemon-info-app">
       <PokemonForm pokemonName={pokemonName} onSubmit={handleSubmit} />
       <hr />
       <div className="pokemon-info">
-        <ErrorBoundary key={pokemonName} FallbackComponent={PokeError} onReset={handleErrorReset}>
+        <ErrorBoundary
+          FallbackComponent={PokeError}
+          onReset={() => setPokemonName('')}
+          resetKeys={[pokemonName]}
+          >
           <PokemonInfo pokemonName={pokemonName} />
         </ErrorBoundary>
       </div>
